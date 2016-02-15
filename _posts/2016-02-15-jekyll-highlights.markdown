@@ -10,7 +10,7 @@ Hello World!
 
 [Jekyll](http://jekyllrb.com/) is a static site generator. What does that mean? It means that it doesn't have a backend coupled to it and all the tasks of generating pages based on templates, the URL structure and so on is made before the deploy in a build step.
 
-It is ideal then for generate websites where content is the main *feature*. Everything you need is just manage a folder with files, there's no need of dealing with programming languages - unless you want create plugins for it - or databases. I don't know if this is a common expression in English, but in my language we commonly say 'Do not use a cannon to kill an ant' - basically: overengineering.
+It is ideal then for generate websites where content is the main *feature*. Everything you need is just manage a folder with files, there's no need of dealing with programming languages - unless you want create plugins for it - or databases. I don't know if this is a common expression in English, but in my language we commonly say 'Do not use a cannon to kill an ant' - basically: do not do overengineering.
 
 Jekyll's documentation is great. It is easy to start with and it goes pretty deep on more advanced things. This post is more about what I think it is nice on this static site generator and this is also a cheatsheet - I love cheatsheets.
 
