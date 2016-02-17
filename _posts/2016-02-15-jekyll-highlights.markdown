@@ -34,7 +34,7 @@ On Jekyll, each post you create you can add a configuration part called `YAML Fr
 
 A very nice thing Jekyll brings out of the box as well is code highlighting. As this is a tech blog and I basically will write about software development - languages, libs/frameworks and tools -, it is very good not being worried about this technicality.
 
-{% highlight ruby %}
+{% highlight ruby linenos %}
 class RubySayer
   def say(name)
     puts "RUBY, #{name}, RUBY!"
