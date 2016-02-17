@@ -45,6 +45,17 @@ RubySayer.new.say('ARTHUR')
 #=> 'RUBY, ARTHUR, RUBY!'
 {% endhighlight %}
 
+    {% raw  %}
+    # using highlight directive:
+
+    {% highlight ruby linenos %}
+    class RubySayer
+    ...
+    RubySayer.new.say('ARTHUR')
+    #=> 'RUBY, ARTHUR, RUBY!'
+    {% endhighlight %}
+    {% endraw %}
+
 ### Templates
 
 The templating language available on Jekyll is called `Liquid`. In `Liquid` you don't have access to a programming language so you do whatever want. You have directives that you can use to include template partials, display content, evaluate conditional expressions, iterate over lists etc. It's pretty restrictive. That might sound bad but in fact it is a good thing on my point of view. First is that the complexity to deal with these directives, once you learn how to they work, is much smaller than maintaining a project written with a fully capable language. Other advantage is that is more secure just running a few set of directives than run a whole language on your servers. Because of being pretty secure, Github gives you the possibility of hosting websites/blogs in their own infrastructure using Jekyll. Those below are include directives, very useful for keep html partials separate with their own responsabilities:
