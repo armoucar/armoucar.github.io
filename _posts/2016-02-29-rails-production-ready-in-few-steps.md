@@ -136,7 +136,7 @@ To test that the database authentication is working let's use the rails console:
 ActiveRecord::Base.connection.execute("SHOW DATABASES;")
 {% endhighlight %}
 
-If the above command executes fine, we're done with all the configuration. Now we have a basic Rails environment ready for production. The provisioning of development and production is automated which will give a boost whenever a new person comes to the team or a new server has to be added to the chain. Add a new server won't be so easy with the configuration we've just made, but Ansible is a powerful and will help when the architecture is ready for work together.
+If the above command executes fine, we're done with all the configuration. Now we have a basic Rails environment ready for production. Provisioning of development and production is automated which will give a boost whenever a new person comes to the team or a new server has to be added to a cluster chain. The current architecture is not ready for clustering, so add a new server is not straightforward. Even so, Ansible is a powerful tool and will help a lot when the architecture is ready to work in cluster.
 
 <a name="troubleshooting" />
 
