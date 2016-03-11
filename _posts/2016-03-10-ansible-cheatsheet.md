@@ -6,7 +6,7 @@ category:
 tags: []
 ---
 
-The idea is always update this post with cool things I use in Ansible, basically for future reference.
+The idea is to always update this post with important concepts I use in Ansible, basically for future reference.
 
 ## Hosts file
 
