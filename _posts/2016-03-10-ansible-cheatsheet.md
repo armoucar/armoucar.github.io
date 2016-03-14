@@ -69,8 +69,10 @@ Then you can execute ansible commands in a specific server or group:
 
 ### Host and group variables
 
+{% raw %}
  - `filename: host_vars/{{host_name}}`.
  - `filename: group_vars/{{group_name}}`.
+{% endraw %}
 
 Ex:
 
@@ -104,32 +106,39 @@ To execute this playbook:
 
 Inside a playbook, just define a `dictionary` called `vars`. Example:
 
+{% raw %}
     - name: defining variables
         vars:
           greeting: "hello"
         tasks:
           - name: output a message
             debug: msg="{{ greeting }}"
+{% endraw %}
 
 #### Registering variables
 
 Register the output of a task to a variable
 
+{% raw %}
     - name: capture output
       command: whoami
       register: output
     - debug: msg="{{ output.stdout }}"
+{% endraw %}
 
 #### Command line variables
 
+{% raw %}
     ansible-playbook example.yml -e my_name=arthur
     ansible-playbook example.yml -e 'my_name="my name is arthur"'
+{% endraw %}
 
 
 #### Built-in variables
 
 `hostvars`, `inventory_hostname`, `group_names`, `groups`, `play_hosts`, `ansible_version`
 
+{% raw %}
     - name: Checking built-in variables
       hosts: server1
       tasks:
@@ -138,13 +147,16 @@ Register the output of a task to a variable
         - debug: msg="{{ groups }}"
         - debug: msg="{{ play_hosts }}"
         - debug: msg="{{ ansible_version }}"
+{% endraw %}
 
 
 ##### Hostvars - getting global facts from other hosts.
 
 If a host needs to get any information from the others hosts, this can be done through the `hostvars` builtin variable.
 
+{% raw %}
     - debug: msg="{{ hostvars['server1'].ansible_eth1.ipv4.address }}"
+{% endraw %}
 
 ### Options
 
@@ -152,11 +164,13 @@ If a host needs to get any information from the others hosts, this can be done t
 
 Serial limits the number of concurrent executing hosts. On the case below, it'll execute on 2 hosts at a time.
 
+{% raw %}
     - name: Execute only 2 hosts in parallel
       hosts: ubuntu
       serial: 2
       tasks:
         - debug: msg="{{ ansible_version }}"
+{% endraw %}
 
 #### Running only once
 
@@ -192,6 +206,7 @@ Code above was copied from the [filters documentation](http://docs.ansible.com/a
 
 Register the result to a variable, ignore errors in case it happens and then display a debug message in case an error happened.
 
+{% raw %}
     - hosts: ubuntu
       tasks:
       - name: Run inexistent program to emulate error
@@ -201,6 +216,7 @@ Register the result to a variable, ignore errors in case it happens and then dis
 
       - debug: msg="Stop running the playbook - /opt/existent has failed -- {{ err.msg }}"
         failed_when: err|failed
+{% endraw %}
 
 ### Lookups
 
@@ -208,6 +224,7 @@ Ansible provide a way of accessing data on external resources.
 
 file: `lookup.yml`
 
+{% raw %}
     - hosts: all
       vars:
         ssh_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') | default('') }}"
@@ -217,10 +234,13 @@ file: `lookup.yml`
         - debug: msg="{{ lookup('pipe', 'git branch') }}"
         - debug: msg="{{ lookup('env', 'PATH') }}"
         - debug: msg="{{ lookup('template', './my_template.j2') }}"
+{% endraw %}
 
 file: `my_template.j2`
 
+{% raw %}
     Sending an email to {{ email }}
+{% endraw %}
 
 ### Loops
 
@@ -263,6 +283,14 @@ Roles are a way of scaling Ansible up by splitting playbooks in different files.
     roles/role_name/defaults/main.yml # default variables
     roles/role_name/meta/main.yml     # dependencies
 
+### Importing roles
+
+    - hosts: all
+      roles:
+        - base
+        - webserver
+        - database
+
 ### Dependencies
 
 file: `meta/main.yml`
@@ -286,3 +314,20 @@ file: `meta/main.yml`
     # Search
     ansible-galaxy search elasticsearch
     ansible-galaxy info username.role_name
+
+## Trial n' Error
+
+List of stuff that I racked my brains, but once got working.
+
+### Create an new user with a password
+
+`user_password` and `user_password_salt` are variables I keep inside a vault.
+
+{% raw %}
+    - name: Generating user's password
+      command: "/usr/bin/python -c 'import crypt; print crypt.crypt(\"{{ user_password }}\", \"{{ user_password_salt }}\")'"
+      register: encrypted_password
+
+    - name: Create application user
+      user: name={{ user_name }} password={{ encrypted_password }} group={{ group_name }} groups="sudo" shell=/bin/bash home={{ user_home_path }}
+{% endraw %}
